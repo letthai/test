@@ -90,6 +90,9 @@ public class DeleteNode {
                 position--;
             }
             find.next = find.next.next;
+
+
+            
         }
         return llist;
     }
