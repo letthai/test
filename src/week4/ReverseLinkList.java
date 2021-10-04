@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.regex.*;
 
-public class DeleteNode {
+public class ReverseLinkList {
 
     static class SinglyLinkedListNode {
         public int data;
@@ -57,12 +57,10 @@ public class DeleteNode {
     class Result {
 
         /*
-         * Complete the 'deleteNode' function below.
+         * Complete the 'reverse' function below.
          *
          * The function is expected to return an INTEGER_SINGLY_LINKED_LIST.
-         * The function accepts following parameters:
-         *  1. INTEGER_SINGLY_LINKED_LIST llist
-         *  2. INTEGER position
+         * The function accepts INTEGER_SINGLY_LINKED_LIST llist as parameter.
          */
 
         /*
@@ -76,22 +74,15 @@ public class DeleteNode {
          */
     }
 
-    public static SinglyLinkedListNode deleteNode(SinglyLinkedListNode llist, int position) {
+    public static SinglyLinkedListNode reverse(SinglyLinkedListNode llist) {
         // Write your code here
-        if (llist == null) {
-            return null;
+        if (llist == null || llist.next == null) {
+            return llist;
         }
-        if (position == 0) {
-            llist = llist.next;
-        } else {
-            SinglyLinkedListNode find = llist;
-            while (position > 1) {
-                find = find.next;
-                position--;
-            }
-            find.next = find.next.next;
-        }
-        return llist;
+        SinglyLinkedListNode newNode = reverse(llist.next);
+        llist.next.next = llist;
+        llist.next = null;
+        return newNode;
     }
 
 
@@ -100,28 +91,31 @@ public class DeleteNode {
     public static void main(String[] args) throws IOException {
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
 
-        SinglyLinkedList llist = new SinglyLinkedList();
-
-        int llistCount = scanner.nextInt();
+        int tests = scanner.nextInt();
         scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
 
-        for (int i = 0; i < llistCount; i++) {
-            int llistItem = scanner.nextInt();
+        for (int testsItr = 0; testsItr < tests; testsItr++) {
+            SinglyLinkedList llist = new SinglyLinkedList();
+
+            int llistCount = scanner.nextInt();
             scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
 
-            llist.insertNode(llistItem);
+            for (int i = 0; i < llistCount; i++) {
+                int llistItem = scanner.nextInt();
+                scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+                llist.insertNode(llistItem);
+            }
+
+            SinglyLinkedListNode llist1 = reverse(llist.head);
+
+            printSinglyLinkedList(llist1, " ", bufferedWriter);
+            bufferedWriter.newLine();
         }
-
-        int position = scanner.nextInt();
-        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
-
-        SinglyLinkedListNode llist1 = deleteNode(llist.head, position);
-
-        printSinglyLinkedList(llist1, " ", bufferedWriter);
-        bufferedWriter.newLine();
 
         bufferedWriter.close();
 
         scanner.close();
     }
 }
+
