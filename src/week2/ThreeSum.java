@@ -6,7 +6,6 @@ public class ThreeSum {
     public static void main(String[] args) {
         In in = new In();
         int[] a = in.readAllInts();
-        ;
         int b = a.length;
         for (int i = 0; i < b; i++) {
             for (int j = i + 1; j < b; j++) {
